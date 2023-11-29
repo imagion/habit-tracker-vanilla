@@ -2,12 +2,123 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="./images/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Habit App</title>
+    <title>Habbit App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600&family=Open+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="./src/styles.css" />
   </head>
   <body>
-    <h1 class="text-2xl underline">Hello</h1>
-    <script type="module" src="/src/app.js"></script>
+    <div class="app flex h-screen">
+      <div class="sidebar basis-28 bg-white p-7 shadow-2xl shadow-indigo-500">
+        <a href="/" class="logo block mb-7"
+          ><img src="/images/logo.svg" alt="Logo"
+        /></a>
+        <nav class="menu flex flex-col items-center">
+          <div class="menu__list flex flex-col gap-6 mb-6"></div>
+          <button
+            class="menu__add flex items-center justify-center w-11 h-11 shadow-lg rounded-lg hover:bg-violet-100"
+            onclick="togglePopup()">
+            <img
+              class="hover:brightness-0 hover:invert"
+              src="/images/add.svg"
+              alt="Add" />
+          </button>
+        </nav>
+      </div>
+
+      <div class="content flex-auto bg-neutral-100 p-11">
+        <header class="flex justify-between items-center">
+          <h1 class="h1 text-3xl font-semibold"></h1>
+          <div class="progress flex flex-col min-w-[250px] gap-3">
+            <div class="progress__text flex justify-between">
+              <div class="text-indigo-800">Прогресс</div>
+              <div class="progress__percent text-indigo-800"></div>
+            </div>
+            <div class="progress__bar h-1 bg-indigo-200 rounded">
+              <div
+                class="progress__bar--fill h-1 bg-indigo-400 rounded transition-all ease-in-out duration-750"></div>
+            </div>
+          </div>
+        </header>
+
+        <main class="content mt-7">
+          <ul class="content__list [&>*+*]:mt-7"></ul>
+          <div
+            class="content__item flex mt-7 items-center bg-white rounded-xl shadow-xl">
+            <div
+              class="content__day min-w-[150px] bg-indigo-50 p-5 text-center rounded-l-xl border-r border-neutral-300 text-lg"></div>
+            <form
+              id="addForm"
+              class="relative flex justify-between px-5 items-center flex-auto gap-3"
+              onsubmit="addDay(event)">
+              <input
+                class="flex-auto border border-indigo-200 rounded-xl py-2 pr-3 pl-9"
+                type="text"
+                name="comment"
+                placeholder="Комментарий" />
+              <img class="absolute left-8" src="./images/comment.svg" />
+              <button
+                class="py-2 px-5 rounded-lg bg-violet-200 text-violet-800"
+                type="submit">
+                Готово
+              </button>
+            </form>
+          </div>
+        </main>
+      </div>
+
+      <div
+        class="cover cover__hidden fixed top-0 left-0 right-0 bottom-0 bg-black/40 flex justify-center items-center">
+        <div
+          class="popup relative flex flex-col w-full items-center max-w-xl p-5 bg-white shadow-lg rounded-xl">
+          <h2 class="text-2xl">Новая Привычка</h2>
+          <div class="icon-label text-neutral-600">Иконка</div>
+          <div class="icon-select flex gap-5 my-2">
+            <button
+              class="icon sport flex w-11 h-11 justify-center items-center border border-indigo-300 rounded-xl hover:bg-violet-400 icon__active"
+              onclick="setIcon(this, 'sport')">
+              <img src="./images/sport.svg" alt="Спорт" />
+            </button>
+            <button
+              class="icon water flex w-11 h-11 justify-center items-center border border-indigo-300 rounded-xl hover:bg-violet-400"
+              onclick="setIcon(this, 'water')">
+              <img src="./images/water.svg" alt="Напитки" />
+            </button>
+            <button
+              class="icon food flex w-11 h-11 justify-center items-center border border-indigo-300 rounded-xl hover:bg-violet-400"
+              onclick="setIcon(this, 'food')">
+              <img src="./images/food.svg" alt="Еда" />
+            </button>
+          </div>
+          <form
+            class="popup-form flex flex-col items-center w-full gap-2"
+            onsubmit="addHabbit(event)">
+            <input
+              class="border border-indigo-10 p-2 rounded-xl w-full"
+              type="text"
+              name="name"
+              placeholder="Название" />
+            <input type="text" name="icon" hidden value="sport" />
+            <input
+              class="border border-indigo-10 p-2 rounded-xl w-full"
+              type="number"
+              name="target"
+              placeholder="Цель" />
+            <button class="py-2 px-4" type="submit">Добавить</button>
+          </form>
+          <button
+            class="popup__close absolute right-4 top-4"
+            onclick="togglePopup()">
+            <img src="./images/close.svg" alt="Закрыть" />
+          </button>
+        </div>
+      </div>
+    </div>
+    <script src="./src/app.js"></script>
   </body>
 </html>
